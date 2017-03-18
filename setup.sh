@@ -8,6 +8,7 @@ apt-get install php5 libapache2-mod-php5 -y
 # Copy the web folder content to the new web root
 rm /var/www/html/index.html
 cp -R web/* /var/www/html
+chown -R www-data:www-data /var/www/html
 
 # Grant sudo access to www-data
 cat  > /etc/sudoers.d/020_www-data-nopasswd << EOF
