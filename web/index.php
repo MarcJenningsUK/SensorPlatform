@@ -1,4 +1,0 @@
-<?php 
-	system("whoami");
-	phpinfo(); 
-?>
