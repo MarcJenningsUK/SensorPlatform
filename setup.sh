@@ -7,21 +7,21 @@ echo "===================================================="
 }
 
 printMsg "Updating apt-get."
-apt-get update
+apt-get update > /tmp/tmp.txt 2>&1
 
 # Install Pigpio
 printMsg "Installing Pigpiod"
-apt-get install pigpio -y
+apt-get install pigpio -y> /tmp/tmp.txt 2>&1
 
 # Install apache and php
 printMsg "Install web server"
-apt-get install apache2 -y
-apt-get install php5 libapache2-mod-php5 -y
+apt-get install apache2 -y > /tmp/tmp.txt 2>&1
+apt-get install php5 libapache2-mod-php5 -y > /tmp/tmp.txt 2>&1
 
 # Copy the web folder content to the new web root
 printMsg "Copying web files to web root."
 rm /var/www/html/index.html
-cp -R web/* /var/www/html
+cp -R /home/pi/SensorPlatform/web/* /var/www/html
 chown -R www-data:www-data /var/www/html
 
 # Grant sudo access to www-data
@@ -51,21 +51,6 @@ cd /home/pi/GitHub
 
 # OLED library
 printMsg "Getting OLED library."
-git clone https://github.com/adafruit/Adafruit_Python_SSD1306
-python Adafruit_Python_SSD1306/setup.py
-
-# Ensure pigpiod is started at boot.
-
-
-# REMOVED
-## Set up an access point for initial configuration
-#apt-get install hostapd -y
-#apt-get install dnsmasq -y
-#service hostapd stop
-#service dnsmasq stop
-#cp includedFiles/hostapd.conf /etc/hostapd/hostapd.conf
-#cp includedFiles/interfaces /etc/network/interfaces
-#cp includedFiles/autohotspot /usr/bin/autohotspot
-#chmod +x /usr/bin/autohotspot
-#cp includedFiles/autohotspot.service /etc/systemd/system/autohotspot.service
-#service autohotspot start
+git clone https://github.com/adafruit/Adafruit_Python_SSD1306 > /tmp/tmp.txt 2>&1
+python Adafruit_Python_SSD1306/setup.py > /tmp/tmp.txt 2>&1
+ 
