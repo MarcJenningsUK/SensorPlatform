@@ -23,6 +23,9 @@ printMsg "Copying web files to web root."
 rm /var/www/html/index.html
 cp -R /home/pi/SensorPlatform/web/* /var/www/html
 chown -R www-data:www-data /var/www/html
+touch /home/pi/SensorPlatform/configuration.conf
+chown pi:pi /home/pi/SensorPlatform/configuration.conf
+chmod 666 /home/pi/SensorPlatform/configuration.conf
 
 # Grant sudo access to www-data
 printMsg "Enabling sudo access for web server user."

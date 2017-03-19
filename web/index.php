@@ -15,6 +15,41 @@
       </div>
     </div>
 
+    <?php
+	$filename = "/home/pi/SensorPlatform/configuration.conf";
+
+        echo('<div class="row"><div class="large-12 columns"><div class="callout">');
+
+	$myfile = fopen($filename, "r") or die("Unable to open file!");
+	while(!feof($myfile)) {
+		$line = fgets($myfile);
+		$splitLine = explode(":", $line, 2);
+
+		if(count($splitLine) == 2)
+		{
+			$$splitLine[0] = $splitLine[1];
+		}
+	}
+	fclose($myfile);
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$myfile = fopen($filename, "w") or die("Unable to open file!");
+		fwrite($myfile, "[default]\n");
+		foreach ($_POST as $name => $val)
+		{	
+			$txt = htmlspecialchars($name . ':' . $val) . "\n";
+			$output .= htmlspecialchars($name . ':' . $val) . "\n";
+			fwrite($myfile, $txt);
+		}
+		fclose($myfile);
+
+                echo('<p>Data written to the configuration file</p><pre>');
+		echo($output);
+		echo('</pre></div></div></div>');
+	}
+    ?>
+
     <div class="row">
       <div class="large-12 columns">
         <div class="callout">
@@ -24,6 +59,7 @@
       </div>
     </div>
 
+        <form data-abide method="post">
     <div class="row">
       <div class="large-8 medium-8 columns">
         <div class="row">
@@ -31,7 +67,7 @@
             <div class="primary callout">
               <h5>Polling interval</h5>
               <label>Get readings every</label>
-              <select>
+              <select name="frequency">
                 <option value="30">30 seconds</option>
                 <option value="60">1 minute</option>
                 <option value="120" selected>2 minutes</option>
@@ -46,28 +82,25 @@
             <div class="primary callout">
               <h5>Reporting</h5>
               <label>The URL to which data will be logged.</label>
-              <input type="text" placeholder="large-12.columns" value="http://api.marc-jennings.co.uk/InsecureUploadOfData.php?temperature=[temp]&humidity=[hum]" />
+              <input type="text" name="reportUrl" placeholder="large-12.columns" value="<?php echo $reportUrl; ?>" />
               <p><em>[temp]</em> will be replaced with the temperature value.<br />
               <em>[hum]</em> will be replaced with the humidity value.</p>
             </div>
           </div>
         </div>
         
-        <form data-abide method="post">
         <div class="row">
           <div class="large-6 medium-6 columns">
             <div class="primary callout">
               <h5>Temperature</h5>
-              
               <label>Trigger heating below</label>
-              <input type="number" placeholder="&deg;C" required pattern="[0-9.]"/>
+              <input name="ttrigger" value=<?php echo $ttrigger; ?> type="number" placeholder="&deg;C" required pattern="[0-9.]"/>
               
               <label>Turn off above</label>
-              <input type="number" placeholder="&deg;C" />
+              <input name="ttriggerreset" value=<?php echo $ttriggerreset; ?> type="number" placeholder="&deg;C" />
               
               <label>Generate Warning below</label>
-              <input type="number" placeholder="&deg;C" />
-              
+              <input name="twarning" value=<?php echo $twarning; ?> type="number" placeholder="&deg;C" />
               
             </div>
           </div>
@@ -75,14 +108,13 @@
             <div class="primary callout">
               <h5>Humidity</h5>
               <label>Trigger dehumidifier above</label>
-              <input type="number" placeholder="% Humidity" value="50" />
+              <input name="htrigger" value=<?php echo $htrigger; ?> type="number" placeholder="% Humidity" value="50" />
               
               <label>Turn off below</label>
-              <input type="number" placeholder="% Humidity" />
-              
+              <input name="htriggerreset" value=<?php echo $htriggerreset; ?> type="number" placeholder="% Humidity" />
               
               <label>Generate Warning above</label>
-              <input type="number" placeholder="% humidity" />
+              <input name="hwarning" value=<?php echo $hwarning; ?> type="number" placeholder="% humidity" />
               
             </div>
           </div>
