@@ -20,7 +20,7 @@
 
         echo('<div class="row"><div class="large-12 columns"><div class="callout">');
 
-	$myfile = fopen($filename, "r") or die("Unable to open file!");
+	$myfile = fopen($filename, "c+") or die("Unable to open file!");
 	while(!feof($myfile)) {
 		$line = fgets($myfile);
 		$splitLine = explode(":", $line, 2);
