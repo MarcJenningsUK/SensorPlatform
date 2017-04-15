@@ -60,6 +60,5 @@ python Adafruit_Python_SSD1306/setup.py install >> /tmp/tmp.txt 2>&1
 # OLED pre-requisites.
 printMsg "Getting OLED pre-requisites."
 sudo apt-get update >> /tmp/tmp.txt 2>&1
-sudo apt-get install build-essential python-dev python-pip python-imaging python-smbus>> /tmp/tmp.txt 2>&1
-sudo pip install RPi.GPIO>> /tmp/tmp.txt 2>&1
-
+sudo apt-get install build-essential python-dev python-pip python-imaging python-smbus -y >> /tmp/tmp.txt 2>&1
+sudo pip install RPi.GPIO -y >> /tmp/tmp.txt 2>&1
