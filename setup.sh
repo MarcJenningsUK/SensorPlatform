@@ -11,12 +11,12 @@ apt-get update > /tmp/tmp.txt 2>&1
 
 # Install Pigpio
 printMsg "Installing Pigpiod"
-apt-get install pigpio -y> /tmp/tmp.txt 2>&1
+apt-get install pigpio -y >> /tmp/tmp.txt 2>&1
 
 # Install apache and php
 printMsg "Install web server"
-apt-get install apache2 -y > /tmp/tmp.txt 2>&1
-apt-get install php5 libapache2-mod-php5 -y > /tmp/tmp.txt 2>&1
+apt-get install apache2 -y >> /tmp/tmp.txt 2>&1
+apt-get install php5 libapache2-mod-php5 -y >> /tmp/tmp.txt 2>&1
 
 # Copy the web folder content to the new web root
 printMsg "Copying web files to web root."
@@ -54,6 +54,12 @@ cd /home/pi/GitHub
 
 # OLED library
 printMsg "Getting OLED library."
-git clone https://github.com/adafruit/Adafruit_Python_SSD1306 > /tmp/tmp.txt 2>&1
-python Adafruit_Python_SSD1306/setup.py > /tmp/tmp.txt 2>&1
- 
+git clone https://github.com/adafruit/Adafruit_Python_SSD1306 >> /tmp/tmp.txt 2>&1
+python Adafruit_Python_SSD1306/setup.py install >> /tmp/tmp.txt 2>&1
+
+# OLED pre-requisites.
+printMsg "Getting OLED pre-requisites."
+sudo apt-get update >> /tmp/tmp.txt 2>&1
+sudo apt-get install build-essential python-dev python-pip python-imaging python-smbus>> /tmp/tmp.txt 2>&1
+sudo pip install RPi.GPIO>> /tmp/tmp.txt 2>&1
+
